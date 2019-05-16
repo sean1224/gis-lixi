@@ -2,7 +2,7 @@
  * @Author: unknown 
  * @Date: 2019-05-14 15:54:30 
  * @Last Modified by: lijian
- * @Last Modified time: 2019-05-14 17:27:41
+ * @Last Modified time: 2019-05-15 11:13:59
  * @description: ol的第二个实例,加载WMS（web map service）图片
 
  */
@@ -41,9 +41,9 @@ export default {
             })
         })    
     }
-}
+};
 </script>
-<style lang='scss'>
+<style lang='scss' scoped>
 #map{
   width: 400px;
   height: 250px;
