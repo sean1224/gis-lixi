@@ -12,7 +12,7 @@ import OSM from 'ol/source/OSM';
 import ImageWMS from 'ol/source/ImageWMS.js';
 export default {
   name: 'App'
-}
+};
 </script>
 
 <style>

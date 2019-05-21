@@ -11,6 +11,7 @@ import sample1 from '@/components/sample1'
 import sample2 from '@/components/sample2'
 import sample3 from '@/components/sample3'
 import navlist from '@/components/nav'
+import canvasTable from '@/components/canvas'
 Vue.use(Router)
 
 export default new Router({
@@ -34,6 +35,12 @@ export default new Router({
       path: '/3',//openlayer中view的應用
       name: 'ol-sample3',
       component: sample3
+    },
+    {
+      path:'/c',//canvas生成echarts表格
+      name:'canvasTable',
+      component:canvasTable
+
     }
   ]
 })

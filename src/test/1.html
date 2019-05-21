@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var a=[1,3,10,5,21];
+		var b=a.sort(function(x,y){
+			if(x<y){
+				return -1;
+			}
+			else{
+				return 1;
+			}
+		})
+		var c=["Aa","B","j","aa"];
+		c.sort(function(x,y){
+			if(x.toLowerCase()<y.toLowerCase()){
+				return -1
+			}
+			else{
+				return 1
+			}
+		});
+		function Stack(){
+			var items = [];
+			this.push = function(element){
+				items.push(element);
+			};
+			this.pop = function(){
+				return items.pop();
+			};
+			this.peek = function(){
+				return items[items.length-1];
+			};
+			this.isEmpty = function(){
+				return items.length == 0;
+			};
+			this.size = function(){
+				return items.length;
+			};
+			this.clear = function(){
+				items = [];
+			};
+			this.print = function(){
+				console.log(items.toString()); 
+			};
+		}
+		var stack =new Stack();
+		stack.push(1);
+		stack.print();
+	</script>
+</body>
+</html>

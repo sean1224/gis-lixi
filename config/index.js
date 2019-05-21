@@ -10,8 +10,14 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
-
+    proxyTable: {
+        '/api':{ 
+            target:'http://localhost:8080',
+            pathRewrite:{
+                '^/api':'/static/mock'
+            }
+        }
+    },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -34,9 +40,9 @@ module.exports = {
     cacheBusting: true,
 
     cssSourceMap: true
-  },
+},
 
-  build: {
+build: {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
 
@@ -49,7 +55,7 @@ module.exports = {
      * Source Maps
      */
 
-    productionSourceMap: true,
+     productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 
@@ -65,5 +71,5 @@ module.exports = {
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report
-  }
+}
 }
