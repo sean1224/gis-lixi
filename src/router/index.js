@@ -5,18 +5,20 @@
  * @Last Modified time: 2019-05-14 16:25:45
  */
 
-import Vue from 'vue'
-import Router from 'vue-router'
-import sample1 from '@/components/sample1'
-import sample2 from '@/components/sample2'
-import sample3 from '@/components/sample3'
-import navlist from '@/components/nav'
-import canvasTable from '@/components/canvas'
-Vue.use(Router)
+ import Vue from 'vue'
+ import Router from 'vue-router'
+ import sample1 from '@/components/sample1'
+ import sample2 from '@/components/sample2'
+ import sample3 from '@/components/sample3'
+ import sample4 from '@/components/sample4'
+ import sample5 from '@/components/sample5'
+ import navlist from '@/components/nav'
+ import canvasTable from '@/components/canvas'
+ Vue.use(Router)
 
-export default new Router({
+ export default new Router({
   routes: [
-    {
+  {
       path: '/',//导航
       name: 'nav',
       component: navlist
@@ -37,10 +39,20 @@ export default new Router({
       component: sample3
     },
     {
+      path: '/4',//openlayer中source和layer的應用
+      name: 'ol-sample4',
+      component: sample4
+    },    
+    {
+      path: '/5',//openlayer中source和layer的應用
+      name: 'ol-sample5',
+      component: sample5
+    },
+    {
       path:'/c',//canvas生成echarts表格
       name:'canvasTable',
       component:canvasTable
 
     }
-  ]
-})
+    ]
+  })

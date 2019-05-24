@@ -11,12 +11,18 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        '/api':{ 
+        '/api':{
             target:'http://localhost:8080',
             pathRewrite:{
                 '^/api':'/static/mock'
             }
-        }
+        },
+        '/mapApi':{
+    				target: 'http://43.254.226.73:6080/',
+    				pathRewrite: {
+    					'^/mapApi': '/arcgis/rest/services/'
+    				}
+  			}
     },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -26,7 +32,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */

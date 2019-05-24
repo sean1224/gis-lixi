@@ -1,5 +1,5 @@
 <template>
-  <div id="app"> 
+  <div id="app">
     <router-view/>
   </div>
 </template>
@@ -8,11 +8,12 @@
 import 'ol/ol.css';
 import {Map, View} from 'ol';
 import {Image as ImageLayer,Tile as TileLayer} from 'ol/layer';
-import OSM from 'ol/source/OSM'; 
+import OSM from 'ol/source/OSM';
 import ImageWMS from 'ol/source/ImageWMS.js';
 export default {
   name: 'App'
 };
+
 </script>
 
 <style>
