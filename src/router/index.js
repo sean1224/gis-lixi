@@ -1,6 +1,6 @@
 /*
- * @Author: lijian 
- * @Date: 2019-05-14 15:21:42 
+ * @Author: lijian
+ * @Date: 2019-05-14 15:21:42
  * @Last Modified by: lijian
  * @Last Modified time: 2019-05-14 16:25:45
  */
@@ -12,6 +12,7 @@
  import sample3 from '@/components/sample3'
  import sample4 from '@/components/sample4'
  import sample5 from '@/components/sample5'
+ import sample6 from '@/components/sample6'
  import navlist from '@/components/nav'
  import canvasTable from '@/components/canvas'
  Vue.use(Router)
@@ -42,11 +43,16 @@
       path: '/4',//openlayer中source和layer的應用
       name: 'ol-sample4',
       component: sample4
-    },    
+    },
     {
       path: '/5',//openlayer中source和layer的應用
       name: 'ol-sample5',
       component: sample5
+    },
+    {
+      path: '/6',//openlayer中source和layer的應用
+      name: 'ol-sample6',
+      component: sample6
     },
     {
       path:'/c',//canvas生成echarts表格

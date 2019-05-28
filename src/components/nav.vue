@@ -1,12 +1,13 @@
 <template>
-	<div class='container'> 
+	<div class='container'>
 		<ul>
 			<li><router-link to='/1'>地图的第一个实例</router-link> </li>
 			<li><router-link to='/2'>加载WMS（web map service）图片</router-link> </li>
 			<li><router-link to='/3'>view的應用</router-link> </li>
 			<li><router-link to='/4'>source和layer的應用</router-link> </li>
-			<li><router-link to='/5'>设置矢量图层的捕捉容差</router-link> </li>
-		</ul> 
+			<li><router-link to='/5'>设置矢量图层的捕捉容差(未完成)</router-link> </li>
+			<li><router-link to='/6'>图标与提示信息</router-link> </li>
+		</ul>
 	</div>
 </template>
 <script>
@@ -18,7 +19,7 @@ export default{
 .container{
 	width: 100%;
 	height: 500px;
-	text-align: center; 
+	text-align: center;
 }
 .container ul,.container li{
 	list-style: none;

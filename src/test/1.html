@@ -5,7 +5,7 @@
 	<title>Document</title>
 </head>
 <body>
-	<script> 
+	<script>
 		/*
 		 *一、栈的实现
 		 */
@@ -38,7 +38,7 @@
 			};
 			// 打印栈
 			this.print = function(){
-				console.log(items.toString()); 
+				console.log(items.toString());
 			};
 		}
 		/*
@@ -79,13 +79,13 @@
 		/*
 		 *三、优先级队列
 		 *注：1、优先级指的是优先的等级，1>2
-		*/
-		function PriorityQueue(){
-			var items=[];
-			function QueueElement(element,priority){
-				this.element=element;
-				this.priority=priority;
-			};
+		 */
+		 function PriorityQueue(){
+		 	var items=[];
+		 	function QueueElement(element,priority){
+		 		this.element=element;
+		 		this.priority=priority;
+		 	};
 			// 添加数据分为
 			// 	一、如果队列中没有值，则直接添加
 			// 	二、如果队列中有值，则循环遍历比较所有值得优先级
@@ -100,12 +100,12 @@
 					let added=false;
 					for(let i=0;i<items.length;i++){
 						if (queueElement.priority < items[i].priority){
-							items.splice(i,0,queueElement); 
+							items.splice(i,0,queueElement);
 							added = true;
-							break; 
+							break;
 						}
 					}
-					if (!added){ 
+					if (!added){
 						items.push(queueElement);
 					}
 				}
@@ -135,44 +135,465 @@
 				console.log(JSON.stringify(items));
 			}
 		}
-		/*
-		 *实现链表
-		*/
-		function LinkedList() {
-			var Node = function(element){ 
-									this.element = element;
-									this.next = null;
-								};
-			var length = 0;  
-			var head = null; 
-			this.append = function(element){
-				var node = new Node(element), //{1}
-				current; //{2}
-				if (head === null){ //列表中第一个节点 //{3}
+		/**
+		 * 三、链表的实现
+		 *
+		 * @class      LinkedList (name)
+		 * @return     {Node}  { 节点初始化 }
+		 */
+		 function LinkedList() {
+		 	var Node = function(element){
+		 		this.element = element;
+		 		this.next = null;
+		 	};
+		 	var length = 0;
+		 	var head = null;
+		 	/**
+		 	 * 在链表末尾添加元素
+		 	 *
+		 	 * @param      {类型不限}  element  插入的元素
+		 	 */
+		 	this.append = function(element){
+				var node = new Node(element),
+				current;
+				if (head === null){
 					head = node;
-				} 
+				}
 				else {
-					current = head; //{4}
+					current = head;
 					//循环列表，直到找到最后一项
 					while(current.next){
 						current = current.next;
 					}
 					//找到最后一项，将其next赋为node，建立链接
-					current.next = node; //{5}
+					current.next = node;
 				}
-				length++; //更新列表的长度 //{6}
+				length++; //更新列表的长度
 			};
-			this.insert = function(position, element){};
-			this.removeAt = function(position){};
-			this.remove = function(element){};
-			this.indexOf = function(element){};
-			this.isEmpty = function() {};
-			this.size = function() {};
-			this.toString = function(){};
-			this.print = function(){};
+			/**
+			 * 在链表的指定位置插入元素
+			 *
+			 * @param      {number}   position  插入元素的位置
+			 * @param      {类型不限}   element   插入的元素
+			 * @return     {boolean}  插入是否成功
+			 */
+			this.insert = function(position, element){
+				//检查越界值
+				if (position >= 0 && position <= length){
+					var node = new Node(element),
+					current = head,
+					previous,
+					index = 0;
+					if (position === 0){
+						node.next = current;
+						head = node;
+					}
+					else {
+						while (index++ < position){
+							previous = current;
+						  current = current.next;
+						}
+						node.next = current;
+						previous.next = node;
+					}
+						length++;
+						return true;
+				}
+				else {
+					return false;
+				}
+			};
+			/**
+			 * 指定位置删除元素
+			 *
+			 * @param      {number}  指定的位置
+			 * @return     {<type>}  删除的元素，没有则为null
+			 */
+			 this.removeAt = function(position){
+				//检查越界值
+				if (position > -1 && position < length){
+					var current = head,
+					previous,
+					index = 0;
+					//移除第一项
+					if (position === 0){
+						head = current.next;
+				}
+				else {
+						while (index++ < position){
+						previous = current;
+						current = current.next;
+					}
+						//将previous与current的下一项链接起来：跳过current，从而移除它
+						previous.next = current.next;
+					}
+					length--;
+					return current.element;
+				}
+				else {
+					return null;
+				}
+			};
+			/**
+			 * 删除某元素值
+			 *
+			 * @param      {类型不限}  element  需要删除的元素
+			 * @return     {类型不限}  获取删除的元素，没有则为null
+			 */
+			this.remove = function(element){
+				var index = this.indexOf(element);
+				return this.removeAt(index);
+			};
+			this.indexOf = function(element){
+				var current = head,
+				index = -1;
+				while (current) {
+					index++;
+					if (element === current.element) {
+						return index;
+					}
+					current = current.next;
+				}
+				return -1;
+			};
+			/**
+			 * 判断链表是否为空
+			 *
+			 * @return     {boolean}  是否为空
+			 */
+			this.isEmpty = function() {
+				return length === 0;
+			};
+			/**
+			 * 获取链表的长度
+			 *
+			 * @return     {int}  链表的长度值
+			 */
+			this.size = function() {
+				return length;
+			}
+			/**
+			 * 获取链表最后的值
+			 *
+			 * @return     {string}  值字符串
+			 */
+			this.toString = function(){
+				var current = head,
+				string = '';
+				while (current) {
+					string = current.element;
+					current = current.next;
+				}
+				return string;
+			};
+			/*
+			获取链表的表头
+			 */
+			this.getHead = function(){
+				return head;
+			};
+			/**
+			 * 将链表转为字符串
+			 */
+			this.print = function(){
+				var current=head,
+				resArr =[];
+				while(current){
+					resArr.push(current.element);
+					current=current.next;
+				}
+				if(resArr.length==0){
+					console.log('null');
+				}
+				else{
+					console.log(resArr.toString());
+				}
+			};
 		}
-		var linkedList = new LinkedList();
-		linkedList.append(1);
+		/**
+		 * 四、集合的实现方式有三种，对象集合和set(es6语法)
+		 * @constructor
+		 */
+		function Set() {
+			var items = {};
+			/*
+			添加某元素
+			 */
+			this.add = function(value){
+				if (!this.has(value)){
+					items[value] = value;
+					return true;
+				}
+				return false;
+			};
+			/*
+			删除元素
+			 */
+			this.remove = function(value){
+				if (this.has(value)){
+					delete items[value];
+					return true;
+				}
+				return false;
+			};
+			/*
+			判断是否含有某只
+			 */
+			this.has = function(value){
+				return items.hasOwnProperty(value);
+			};
+			/*
+			清空集合
+			 */
+			this.clear = function(){
+				items = {};
+			};
+			/*
+			获取集合的大小
+			 */
+			this.size = function(){
+				return Object.keys(items).length;
+			};
+			/*
+			获取集合中所有的元素
+			 */
+			this.values = function(){
+				return Object.keys(items);
+			};
+		}
+		/**
+		 * 4.2、集合类的数组实现
+		 */
+		function SetA(){
+			var items=[];
+			this.add=function(item){
+				if(items.indexOf(item)==-1){
+					items.push(item);
+					return true;
+				}
+				else{
+					return false
+				}
+			};
+			this.remove=function(item){
+				items.splice(items.indexOf(item),1);
+			};
+			this.has=function(item){
+				return (items.some(function(i){
+					if(i==item){
+						return true;
+					}
+					else{
+						return false
+					}
+				}))
+			};
+			this.size=function(){
+				return items.length;
+			};
+			this.values=function(){
+				return items.toString();
+			};
+			this.clear=function(){
+				items=[];
+			};
+		}
+		/**
+		 * 4.3、集合类的set实现，已经成为es6内置语法可直接使用。
+		 */
+		/**
+		 * 五、字典的实现
+		 * @constructor
+		 */
+		 function Dictionary() {
+			 var items = {};
+			 /*
+			 设置键值
+			  */
+			 this.set=function(key,value){
+					items[key]=value;
+			 };
+			 /*
+			 获取特定键值的值
+			  */
+			 this.get=function(key){
+				 if(key in items){
+					 return items[key];
+				 }
+			 };
+			 /*
+			 移除特定键值的值
+			  */
+			 this.remove=function(key){
+				 	if(key in items){
+						delete items[key];
+						return true;
+					}
+					else{
+						return false;
+					}
+			 };
+			 /*
+			 判断是否含有某键值
+			  */
+			 this.has=function(key){
+				 return key in items;
+			 };
+			 /*
+			 清空字典
+			  */
+			 this.clear=function(){
+				 for(var item in items){
+					 delete items[item];
+				 }
+			 };
+			 /*
+			 获取字典的长度
+			  */
+			 this.size=function(){
+				 return Object.keys(items).length;
+			 };
+			 /*
+			 获取字典所有的键
+			  */
+			 this.keys=function(){
+				 return Object.keys(items);
+			 };
+			 /*
+			 获取字典所有的值
+			  */
+			 this.values=function(){
+				 return Object.keys(items).map(function(key){
+					 return items[key];
+				 });
+			 };
+			 /*
+			 获取字典所有的键与值
+			  */
+			 this.getItems=function(){
+				 return items;
+			 };
+		 }
+		 /*
+		 七、哈希表(散列表)
+		  */
+		 function HashTable() {
+		   var table = [];
+			 //编码字符串
+			 var hashCode = function (key) {
+				 var hash = 5381;
+				 for (var i = 0; i < key.length; i++) {
+				 hash = hash * 33 + key.charCodeAt(i);
+				 }
+				 return hash % 1013;
+			 };
+			 //解决哈希表地址冲突方法，分离链接
+			 var ValuePair = function(key, value){
+				 this.key = key;
+				 this.value = value;
+				 this.toString = function() {
+					 return '[' + this.key + ' - ' + this.value + ']';
+				 }
+		   };
+			 //向哈希表中添加值
+			 this.put=function(key,value){
+				  var position = hashCode(key);
+					if (table[position] == undefined) {
+						table[position] = new LinkedList();
+					}
+					table[position].append(new ValuePair(key, value));
+			 };
+			 //从哈希表中移除值
+			 this.remove=function(key){
+				 var position = hashCode(key);
+				 if (table[position] !== undefined){
+					 var current = table[position].getHead();
+					 while(current.next){
+						 if (current.element.key === key){
+						 	 table[position].remove(current.element);
+							 if (table[position].isEmpty()){
+								 table[position] = undefined;
+							 }
+							 return true;
+						 }
+						 current = current.next;
+				 	 }
+				 // 检查是否为第一个或最后一个元素
+				 if (current.element.key === key){
+					 table[position].remove(current.element);
+					 if (table[position].isEmpty()){
+					 table[position] = undefined;
+					 }
+					 return true;
+				 }
+			 }
+			 return false; //{17}
+			 };
+			 //从哈希表中获取特定值
+			 this.get=function(key){
+				  var position = hashCode(key);
+					if (table[position] !== undefined){
+						//遍历链表来寻找键/值
+						var current = table[position].getHead();
+						while(current.next){
+						if (current.element.key === key){
+							return current.element.value;
+						}
+						current = current.next;
+						}
+						//检查元素在链表第一个或最后一个节点的情况
+						if (current.element.key === key){
+							return current.element.value;
+						}
+					}
+					return undefined;
+			 };
+		 }
+		 /*
+			八、二叉搜索树
+		  */
+			function BinarySearchTree() {
+				 var Node = function(key){
+					 this.key = key;
+					 this.left = null;
+					 this.right = null;
+				 };
+				 var root = null;
+				 var insertNode = function(node, newNode){
+						if (newNode.key < node.key){
+							if (node.left === null){
+							node.left = newNode;
+							}
+							else {
+								insertNode(node.left, newNode);
+							}
+						}
+						else {
+							if (node.right === null){
+								node.right = newNode;
+							}
+							else {
+								insertNode(node.right, newNode);
+							}
+						}
+				 };
+				 this.insert=function(key){
+					 	var newNode = new Node(key);
+						if (root === null){
+							root = newNode;
+						}
+						else {
+							insertNode(root,newNode);
+						}
+				 };
+				 this.search=function(key){};
+				 this.inOrderTranverse=function(){};
+				 this.preOrderTranverse=function(){};
+				 this.postOrderTranverse=function(){};
+				 this.min=function(){};
+				 this.max=function(){};
+				 this.remove=function(key){};
+		  }
 	</script>
 </body>
 </html>

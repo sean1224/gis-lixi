@@ -17,11 +17,21 @@ module.exports = {
                 '^/api':'/static/mock'
             }
         },
+        '/pic':{
+            target:'http://localhost:8080',
+            pathRewrite:{
+                '^/pic':'/static/img'
+            }
+        },
         '/mapApi':{
     				target: 'http://43.254.226.73:6080/',
     				pathRewrite: {
     					'^/mapApi': '/arcgis/rest/services/'
     				}
+  			},
+        '/cityApi':{
+    				target: 'https://data.jianshukeji.com/jsonp?filename=geochina/',
+            changeOrigin: true
   			}
     },
     // Various Dev Server settings

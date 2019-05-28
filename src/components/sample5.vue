@@ -10,14 +10,17 @@
   <div id="mapc"></div>
 </template>
 <script>
-import 'ol/ol.css';
 import {Map, View} from 'ol';
 import {
   Tile as TileLayer,
-  Image as ImageLayer,
   Vector as VectorLayer
 } from "ol/layer";
-import { OSM, ImageArcGISRest } from "ol/source";
+import {Style,Stroke} from 'ol/style'
+import OSM from "ol/source/OSM";
+import VectorSource from 'ol/source/Vector'
+import GeoJSON from 'ol/format/GeoJSON'
+import {transform} from 'ol/proj'
+import {unByKey} from 'ol/Observable'
 export default {
   name: 'sample5',
   data () {
@@ -26,24 +29,52 @@ export default {
       map:null
     }
   },
+  methods:{
+    clickPoint:function(e){
+      alert(e);
+    }
+  },
   mounted () {
+    //生成raster图层
+    let raster=new TileLayer({
+      source:new OSM()
+    });
+    //生成vector图层
+    let vector=new VectorLayer({
+      source :new VectorSource({
+        url:'/api/Shanghai.geojson',
+        format:new GeoJSON()
+      }),
+      style: new Style({
+          stroke: new Stroke({
+              color: 'red',
+              size: 3
+          })
+      })
+    });
+    // 因为是异步加载，所以要采用事件监听的方式来判定是否加载完成
+    let listenerKey = vector.getSource().on('change', function(){
+        if (vector.getSource().getState() === 'ready') {    // 判定是否加载完成
+            console.log('vector图层加载成功');
+            unByKey(listenerKey); // 注销监听器
+        }
+        else{
+          console.log('vector图层加载失败')
+        }
+    });
     this.map = new Map({
      target: "mapc",
-     layers: [
-       new ImageLayer({
-         source: new ImageArcGISRest({
-           ratio: 1,
-           params: {},
-           url:
-             "/mapApi/test/test_1/MapServer"
-         })
-       })
-     ],
+     layers: [vector],
      view:new View({
-       projection: 'EPSG:4326',
-       center: [121.256151, 31.328742],
-       zoom:18
+       projection:'EPSG:4326',
+       center: [121.472644,31.231706],
+       zoom:9
      })
+   });
+   //map对象绑定click事件
+   let _this=this;
+   this.map.on('click',function(e){
+     _this.clickPoint(e);
    });
   }
 };
