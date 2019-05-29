@@ -1,0 +1,6 @@
+.a{
+  border-color: red;
+}
+.a .a1{
+  border: none;
+}

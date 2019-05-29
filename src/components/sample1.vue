@@ -1,14 +1,14 @@
 /*
- * @Author: lijian 
- * @Date: 2019-05-14 15:38:40 
+ * @Author: lijian
+ * @Date: 2019-05-14 15:38:40
  * @Last Modified by: lijian
  * @Last Modified time: 2019-05-14 15:54:14
  * @description: 地图的第一个实例
  */
 
-<template> 
+<template>
   <div id="map"></div>
-</template> 
+</template>
 <script>
 import 'ol/ol.css';
 import {Map, View} from 'ol';
