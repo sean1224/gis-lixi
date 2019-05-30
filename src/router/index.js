@@ -15,6 +15,7 @@
  import sample6 from '@/components/sample6'
  import sample7 from '@/components/sample7'
  import sample8 from '@/components/sample8'
+ import sample9 from '@/components/sample9'
  import navlist from '@/components/nav'
  import canvasTable from '@/components/canvas'
  Vue.use(Router)
@@ -65,6 +66,11 @@
       path: '/8',//openlayer中source和layer的應用
       name: 'ol-sample8',
       component: sample8
+    },
+    {
+      path: '/9',//openlayer中source和layer的應用
+      name: 'ol-sample9',
+      component: sample9
     },
     {
       path:'/c',//canvas生成echarts表格

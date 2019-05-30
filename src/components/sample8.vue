@@ -6,7 +6,7 @@
   <div>
     <div id="map">
     </div>
-    <button type="button" name="button" @click='openChooseItem'></button>选择要素</button>
+    <button type="button" name="button" @click='openChooseItem'></button>
   </div>
 
 </template>
