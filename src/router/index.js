@@ -1,8 +1,8 @@
 /*
  * @Author: lijian
  * @Date: 2019-05-14 15:21:42
- * @Last Modified by: lijian
- * @Last Modified time: 2019-05-14 16:25:45
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2019-09-28 20:47:23
  */
 
  import Vue from 'vue'
@@ -15,6 +15,7 @@
  import sample6 from '@/components/sample6'
  import sample7 from '@/components/sample7'
  import sample8 from '@/components/sample8'
+ import editOnline from '@/components/editOnline'
  import navlist from '@/components/nav'
  import canvasTable from '@/components/canvas'
  Vue.use(Router)
@@ -70,6 +71,12 @@
       path:'/c',//canvas生成echarts表格
       name:'canvasTable',
       component:canvasTable
+
+    },
+    {
+      path:'/edit',//canvas生成echarts表格
+      name:'editOnline',
+      component:editOnline
 
     }
     ]

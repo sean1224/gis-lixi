@@ -8,6 +8,7 @@
 			<li><router-link to='/5'>设置矢量图层的捕捉容差(未完成)</router-link> </li>
 			<li><router-link to='/6'>图标与提示信息(popup未实现)</router-link> </li>
 			<li><router-link to='/7'>事件</router-link> </li>
+			<li><router-link to='/edit'>在线编辑(arcgis api)</router-link> </li>
 		</ul>
 	</div>
 </template>
