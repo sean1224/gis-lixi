@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style>
-@import url('http://localhost:8080/arcgis_js_api/library/4.10/esri/themes/light/main.css');
+@import url('http://localhost:8080/arcgis_js_api/library/4.11/esri/themes/light/main.css');
 @import'./assets/css/public.css';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
