@@ -6,10 +6,20 @@
       <div class="container">
         <ul>
           <li v-for="(item,index) in featureList" :key="index">
-            <span>{{item.attributes.OBJECTID}}</span>
-            <span>{{item.attributes.NAME}}</span>
-            <span>{{item.attributes.CITY}}</span>
+            <div>
+              <span @click.prevent="handleClickFeatureLayer(item)">{{item.attributes.OBJECTID}}</span>
+              <span>{{item.attributes.NAME}}</span>
+              <span>{{item.attributes.CITY}}</span>
+            </div>
           </li>
+          <div>
+            <ul>
+              <li v-for="(value,name) in currentNewGraphic.attributes" :key="name">
+                <label :for="name">{{name}}</label>
+                <input :name="name" type="text" :value="value" readonly/>
+              </li>
+            </ul>
+          </div>
         </ul>
       </div>
     </div>
@@ -27,6 +37,21 @@
         <button @click="handleClickBtnDelete">删除要素</button>
         <button @click="handleClickBtnClearSel">清除选择</button>
       </div>
+      <hr>
+      <div>
+        <!-- <button @click="handleClickBtnAlterAttr">修改属性</button> -->
+      </div>
+      <hr>
+      <form method="post" v-show="Object.keys(currentGraphic.attributes).length">
+        <ul>
+          <li v-for="(value,name) in currentGraphic.attributes" :key="name">
+            <label :for="name">{{name}}</label>
+            <input :name="name" type="text" :value="value"/>
+          </li>
+        </ul>
+        <button @click="handleSubmitForm" type="button">提交</button>
+        <button type="reset">重置</button>
+      </form>
       <hr>
     </div>
   </div>
@@ -59,7 +84,8 @@ export default {
       currentMap: null,
       currentView: null,
       currentFeatureLayer: null,
-      currentGraphic: null,
+      currentGraphic: {"attributes":{}},
+      currentNewGraphic: {"attributes":{}},
       currentHighLight: null
     };
   },
@@ -126,7 +152,7 @@ export default {
                 this.currentView.whenLayerView(graphic.layer).then(layerView =>{
                   // 如果view中存在高亮，则取消
                   if(this.currentHighLight){
-                    this.currentHighLight.remove();
+                    this.currentHighLight.remove(); 
                   }
                   // 如果不存在高亮，则保存选择的graphic并高亮显示
                   this.currentGraphic = graphic;
@@ -148,7 +174,8 @@ export default {
     addFeatureLayer() {
       this.currentFeatureLayer = new this.FeatureLayer({
         // URL to the service
-        url: this.url.featureLayer
+        url: this.url.featureLayer,
+        outFields:["*"]
       });
       this.currentMap.add(this.currentFeatureLayer);
     },
@@ -164,7 +191,7 @@ export default {
       var query = new this.Query();
       query.returnGeometry = true;
       query.outFields = ["*"];
-      query.where = `NAME like '%${name}%'`;
+      query.where = `OBJECTID like '%${name}%'`;
 
       // 执行查询结果
       queryTask
@@ -288,6 +315,82 @@ export default {
       if(this.currentHighLight){
         this.currentHighLight.remove();
       }
+    },
+    /**
+     * 修改要素属性
+     */
+    handleClickBtnAlterAttr(){
+      console.log(this.currentGraphic)
+    },
+    /**
+     * 提交表单
+     * [{"geometry":{"spatialReference":{"latestWkid":3857,"wkid":102100},
+     * "rings":[[[13465377.912401905,3645345.9605211676],[13464521.81675204,3640943.1895580785],
+     * [13473449.660722684,3639230.9982583513]]]},"attributes":{}}]
+     */
+    handleSubmitForm(){
+      let OBJECTID = document.forms[0].elements["OBJECTID"].value;
+      let NAME = document.forms[0].elements["NAME"].value;
+      let CITY = document.forms[0].elements["CITY"].value;
+      
+      let geometry = this.currentGraphic.geometry;
+      let attributes = this.currentGraphic.attributes;
+
+      // let str = "";
+      // // 递归获取数组的字符串
+      // function getStr(array){
+      //   str += "[";
+      //   array.forEach((value,index) => {
+      //     if(value instanceof Array){
+      //       if(index && index < array.length){
+      //         str += ",";
+      //       }
+      //       getStr(value)
+      //     }
+      //     else{
+      //       if(index == array.length - 1){
+      //         str += value;
+      //       }
+      //       else{
+      //         str += (value.toString() + ",")
+      //       }
+      //     }
+      //   })
+      //   str += "]";
+      // }
+      // 转换字符串
+      // getStr(geometry.rings);
+      // let formText = 
+      // `[{"geometry":{"rings":${str}},"attributes":{
+      //     "OBJECTID":${OBJECTID},
+      //     "NAME":"${NAME}",
+      //     "CITY":"${CITY}"
+      //   }}]`;
+      
+      this.currentFeatureLayer.applyEdits({
+        updateFeatures:[{
+          "geometry": geometry,
+          "attributes":{
+            "OBJECTID": attributes.OBJECTID,
+            "NAME": NAME,
+            "CITY": CITY
+          }
+        }]
+      })
+      .then(result => {
+        console.log(result)
+      })
+      .catch(error => {
+        console.log(error.message)
+      })
+    
+
+    },
+    /**
+     * 点击图层
+     */
+    handleClickFeatureLayer(graphic){
+      this.currentNewGraphic = graphic;
     }
   }
 };
